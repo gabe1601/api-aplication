@@ -9,10 +9,10 @@ import med.voll.api.endereco.Endereco;
 
 @Table(name="medicos")
 @Entity(name="Medico")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="id")
+@Getter
 public class Medico {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +37,4 @@ public class Medico {
         this.especialidade=dados.especialidade();
         this.endereco=new Endereco(dados.endereco());
     }
-
 }
