@@ -1,53 +1,48 @@
-package med.voll.api.medico;
+package med.voll.api.domain.paciente;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.endereco.Endereco;
+import med.voll.api.domain.endereco.Endereco;
 
-@Table(name="medicos")
-@Entity(name="Medico")
+@Table(name="pacientes")
+@Entity(name="paciente")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="id")
-@Getter
-public class Medico {
+public class Paciente {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
-    private String crm;
     private String telefone;
+    private String cpf;
     private Boolean ativo;
-
-    @Enumerated(EnumType.STRING)
-    private Especialidade especialidade;
-
     @Embedded
     private Endereco endereco;
 
-    //Construtor criado pra converter o dado do DTO
-    public Medico(DadosCadastroMedico dados){
-        this.ativo = true;
+    public Paciente(DadosCadastroPacientes dados){
+        this.ativo=true;
         this.nome=dados.nome();
         this.email=dados.email();
-        this.crm=dados.crm();
         this.telefone=dados.telefone();
-        this.especialidade=dados.especialidade();
+        this.cpf=dados.cpf();
         this.endereco=new Endereco(dados.endereco());
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
+    public void atualizarInformacoes(DadosAtualizacaoPaciente dados) {
         if(dados.nome() != null){
-            this.nome=dados.nome();
+            this.nome = dados.nome();
         }
-        if(dados.telefone()!=null){
-            this.telefone= dados.telefone();
+        if(dados.telefone() != null){
+            this.telefone = dados.telefone();
         }
-        if(dados.endereco() != null) {
+        if(dados.endereco() != null){
             this.endereco.atualizarInformacoes(dados.endereco());
         }
     }
